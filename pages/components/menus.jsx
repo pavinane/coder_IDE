@@ -9,10 +9,10 @@ function Menus({ activeMenu, handleMenuClick }) {
             <li
               key={index}
               onClick={() => handleMenuClick(index)} // Pass the index to the handleMenuClick function
-              className={`cursor-pointer hover:text-blue-500 hover:border-b-2 hover:border-blue-500 ${
+              className={`cursor-pointer hover:text-blue-500 hover:border-b-2 hover:border-blue-500  ${
                 activeMenu === index
                   ? "text-blue-500 border-b-2 border-blue-500 "
-                  : ""
+                  : "text-[#5D677D]"
               }`}
             >
               {item.name}
