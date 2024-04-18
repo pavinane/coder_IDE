@@ -1,11 +1,14 @@
-import Header from "./components/header";
+// pages/index.js
+import React from "react";
 
-export default function Home() {
+import AlAudit from "./al-audit";
+
+function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-2 bg-[#0d0f11]`}
-    >
-      <Header />
-    </main>
+    <div className="text-white w-full">
+      <AlAudit />
+    </div>
   );
 }
+
+export default Home;

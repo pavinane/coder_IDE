@@ -2,27 +2,39 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../assets/Logo.png";
-import Menus, { menusList } from "./menus";
+import Menus, { MenusList } from "./Menus";
 import { IoIosArrowDown } from "react-icons/io";
+import Breadcrumbs from "./BreadCrumb";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 function Header() {
   const [activeMenu, setActiveMenu] = useState(0);
 
-  const handleMenuClick = (index) => {
+  const router = useRouter();
+  const handleMenuClick = (index, href) => {
     setActiveMenu(index);
+    router.push(href);
   };
   const style = "avataaars"; // Style of the avatar
   const seed = Math.random().toString(36).substring(2, 15); // Random seed for variation
 
   // Generate the URL for the random avatar image
-  //   const avatarUrl = `https://avatars.dicebear.com/api/${style}/${seed}.svg`;
 
-  const avatarUrl1 = `https://api.dicebear.com/8.x/${style}/svg?seed=${seed}`;
+  const avatarUrl1 = `https://api.dicebear.com/8.x/${style}/svg?seed=${seed}}`; // need to change seed
+
+  const breadcrumbs = [
+    { text: "AlAudit", href: "/" },
+    // { text: "AlAudit", href: "/al-audit" },
+    { text: "Project", href: "/al-audit/project" },
+  ];
   return (
-    <div className="text-white w-full">
+    <div className=" w-full">
       <div className="bg-[#191d23] flex  w-full items-center rounded-sm">
-        <div className="w-60 p-2 flex justify-center ">
-          <Image src={logo} alt="Picture of the author" className="w-36" />
+        <div className="w-56 p-2 flex justify-center ">
+          <Link href="/">
+            <Image src={logo} alt="Picture of the author" className="w-32" />
+          </Link>
         </div>
 
         <div className="menus justify-items-end border-r border-l p-4 border-[#2b2f35] w-full">
@@ -39,12 +51,14 @@ function Header() {
           </div>
         </div>
       </div>
+
+      <Breadcrumbs items={breadcrumbs} />
       {/* Render content based on the activeMenu */}
-      {activeMenu !== null && (
+      {/* {activeMenu !== null && (
         <div className="mt-4 p-4 bg-gray-200">
-          {menusList[activeMenu].name} content here
+          {MenusList[activeMenu].name} content here
         </div>
-      )}
+      )} */}
     </div>
   );
 }
