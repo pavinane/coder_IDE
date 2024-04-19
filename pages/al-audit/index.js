@@ -2,7 +2,7 @@
 
 import React from "react";
 import Layout from "../components/Layout";
-import ErrorWarningComponent from "../components/ErrorWarning";
+// import ErrorWarningComponent from "../components/ErrorWarning";
 // import "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css";
 import CodeEditer from "../components/CodeEditer";
 import FolderStructure from "../components/FolderStructure";

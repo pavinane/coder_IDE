@@ -14,6 +14,16 @@ module.exports = {
       },
     },
   },
-
+  images: {
+    // domains: ["api.dicebear.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        port: "",
+        pathname: "/8.x/adventurer-neutral/svg",
+      },
+    ],
+  },
   plugins: [],
 };

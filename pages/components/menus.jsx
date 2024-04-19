@@ -1,11 +1,10 @@
-// components/Menus.js
 import React from "react";
 
 function Menus({ activeMenu, handleMenuClick }) {
   return (
     <div>
       <ul className="flex gap-10 justify-end">
-        {MenusList.map((item, index) => (
+        {MenusList?.map((item, index) => (
           <li
             key={index}
             onClick={() => handleMenuClick(index, item.href)}

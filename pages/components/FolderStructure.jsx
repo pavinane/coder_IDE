@@ -52,7 +52,7 @@ const FolderStructure = () => {
   const handleEditFolder = (folder) => {
     const folderName = prompt("Enter new folder name:");
     if (folderName) {
-      const updatedFolders = folders.map((f) =>
+      const updatedFolders = folders?.map((f) =>
         f === folder ? { ...f, name: folderName } : f
       );
       setFolders(updatedFolders);
@@ -166,7 +166,7 @@ const FolderStructure = () => {
             </div>
             {selectedFolder === index && (
               <ul>
-                {item.folders.map((folder, subIndex) => (
+                {item.folders?.map((folder, subIndex) => (
                   <li key={subIndex}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center justify-between gap-10">
@@ -189,7 +189,7 @@ const FolderStructure = () => {
                     </div>
                   </li>
                 ))}
-                {item.files.map((file, subIndex) => (
+                {item.files?.map((file, subIndex) => (
                   <li key={subIndex}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center justify-between gap-10">

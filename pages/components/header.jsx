@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../assets/Logo.png";
-import Menus, { MenusList } from "./Menus";
+import Menus from "./Menus";
 import { IoIosArrowDown } from "react-icons/io";
 import Breadcrumbs from "./BreadCrumb";
 import Link from "next/link";
