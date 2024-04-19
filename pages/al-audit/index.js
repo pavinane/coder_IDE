@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import CodeEditer from "../components/CodeEditer";
 import FolderStructure from "../components/FolderStructure";
+import { MdClose } from "react-icons/md";
 
 function AlAudit() {
   const [folders, setFolders] = useState([]);
@@ -12,20 +13,40 @@ function AlAudit() {
     item: null,
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
+  // const [active, setActive] = useState(false);
+  const [activeFile, setActiveFile] = useState(null);
 
   const handleToggleFolder = (index, item) => {
     setSelectedFolder({ index, item });
     setSelectedFiles([]);
+    setActiveFile(null);
   };
 
   // const handleToggleFile = (file) => {
+  //   console.log("file", file);
   //   if (selectedFiles.includes(file)) {
   //     setSelectedFiles(selectedFiles.filter((f) => f !== file));
+  //     setActive(true);
   //   } else {
   //     setSelectedFiles([...selectedFiles, file]);
   //   }
   // };
+  const handleToggleFile = (file) => {
+    if (
+      activeFile === file
+      // && selectedFiles.includes(file)
+    ) {
+      // setSelectedFiles(selectedFiles.filter((f) => f !== file));
+      setActiveFile(null);
+    } else {
+      // setSelectedFiles([...selectedFiles, file]);
+      setActiveFile(file);
+    }
+  };
 
+  const handleRemoveFile = (file) => {
+    setSelectedFiles(selectedFiles.filter((f) => f !== file));
+  };
   return (
     <Layout>
       <div className=" p-4 bg-[#191d23] min-h-screen rounded-sm ">
@@ -52,17 +73,39 @@ function AlAudit() {
                 setSelectedFiles={setSelectedFiles}
               />
             </div>
-            <div className="bg-[#0d0f11] w-full rounded-sm">
+            <div className="bg-[#1e232b] w-full rounded-sm">
               <div>
-                <ul>
+                <ul className="flex  ">
                   {selectedFiles.map((file, index) => (
-                    <li key={index}>{file}</li>
+                    <li
+                      key={index}
+                      className={`border-r-2 border-[#5d677d] p-2 flex  w-40 cursor-pointer justify-evenly items-center 
+                      ${
+                        activeFile === file
+                          ? "bg-[#1479f6]  rounded-sm  text-white"
+                          : "text-[#5d677d]"
+                      }
+                      `}
+                      onClick={() => handleToggleFile(file)}
+                    >
+                      <span>{file}</span>
+                      <MdClose
+                        className="cursor-pointer"
+                        onClick={() => handleRemoveFile(file)}
+                      />
+                    </li>
                   ))}
                 </ul>
               </div>
-              {selectedFolder.index !== null &&
+              {/* {selectedFolder.index !== null &&
                 selectedFolder.index < folders.length && (
                   <CodeEditer fileName={selectedFolder.item?.name} />
+                )} */}
+              {selectedFolder.index !== null &&
+                selectedFolder.index < folders.length && (
+                  <CodeEditer
+                    fileName={activeFile || selectedFolder.item?.name}
+                  />
                 )}
             </div>
             <div className="bg-[#0d0f11] w-96 rounded-sm">

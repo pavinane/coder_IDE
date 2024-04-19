@@ -6,6 +6,8 @@ import {
   MdDelete,
 } from "react-icons/md";
 
+import { FaRegFolderClosed } from "react-icons/fa6";
+
 const FolderStructure = ({
   folders,
   setFolders,
@@ -112,7 +114,7 @@ const FolderStructure = ({
   };
 
   return (
-    <div className="p-4 bg-gray-800 text-white rounded h-[100%]">
+    <div className="p-4 bg-[#13161a] text-white rounded h-[100%]">
       <div className="flex justify-between items-center mb-4 border-b-2">
         <div className="text-md font-bold ">Folders & Files</div>
         <div>
@@ -120,7 +122,7 @@ const FolderStructure = ({
             onClick={handleCreateFolder}
             className="  text-white font-bold  rounded mr-2"
           >
-            <MdFolder size={16} />
+            <FaRegFolderClosed size={16} />
           </button>
           <button
             onClick={handleCreateFile}
@@ -138,14 +140,14 @@ const FolderStructure = ({
 
                ${
                  selectedFolder === index
-                   ? "text-blue-700 p-1 rounded-sm mb-2 "
+                   ? "text-[#1479f6] p-1 rounded-sm mb-2  font-semibold "
                    : ""
                }
 
               `}
               onClick={() => handleToggleFolder(index)}
             >
-              {item.isFile ? <MdInsertDriveFile /> : <MdFolder />}
+              {item.isFile ? <MdInsertDriveFile /> : <FaRegFolderClosed />}
               <span className="ml-2">{item.name}</span>
               {!item.isFile && (
                 <div className="flex gap-4">
@@ -175,7 +177,7 @@ const FolderStructure = ({
                       <div>
                         <button
                           onClick={() => handleEditFolder(subIndex)}
-                          className="text-blue-500"
+                          className="text-[#1479f6] "
                         >
                           <MdCreate />
                         </button>
@@ -194,7 +196,7 @@ const FolderStructure = ({
                     <div
                       className={`cursor-pointer flex items-center justify-between ${
                         selectedFiles.includes(file.name)
-                          ? "bg-blue-700 p-1 rounded-sm mb-2"
+                          ? "text-[#1479f6] p-1 rounded-sm mb-2 bg-[#111e2c] font-semibold"
                           : ""
                       }`}
                       onClick={() => handleToggleFile(file.name)}
@@ -206,7 +208,7 @@ const FolderStructure = ({
                       <div>
                         <button
                           onClick={() => handleEditFile(subIndex)}
-                          className="text-blue-500"
+                          className="text-white"
                         >
                           <MdCreate />
                         </button>
