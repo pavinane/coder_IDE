@@ -48,7 +48,7 @@ function AlAudit() {
             <div className="bg-[#0d0f11] w-full rounded-sm">
               <CodeEditer code={code} />
             </div>
-            <div className="bg-[#0d0f11] w-68 rounded-sm">
+            <div className="bg-[#0d0f11] w-96 rounded-sm">
               {/* <ErrorWarningComponent errors={errors} warnings={warnings} /> */}
               <FolderStructure />
             </div>

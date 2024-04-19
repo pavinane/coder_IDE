@@ -1,45 +1,98 @@
-// FolderStructureComponent.js
-"use client";
 import React, { useState } from "react";
-import { TbFolderPlus } from "react-icons/tb";
-import { LuFilePlus2 } from "react-icons/lu";
-import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
-import { MdDeleteOutline } from "react-icons/md";
+import {
+  MdFolder,
+  MdInsertDriveFile,
+  MdCreate,
+  MdDelete,
+} from "react-icons/md";
 
 const FolderStructure = () => {
   const [folders, setFolders] = useState([]);
-  const [files, setFiles] = useState([]);
+  const [selectedFolder, setSelectedFolder] = useState(null);
 
   const handleCreateFolder = () => {
     const folderName = prompt("Enter folder name:");
     if (folderName) {
-      setFolders([
-        ...folders,
-        { name: folderName, isOpen: false, folders: [], files: [] },
-      ]);
+      setFolders([...folders, { name: folderName, folders: [], files: [] }]);
     }
   };
 
   const handleCreateFile = () => {
     const fileName = prompt("Enter file name:");
     if (fileName) {
-      setFiles([...files, { name: fileName }]);
+      setFolders([...folders, { name: fileName, isFile: true }]);
     }
   };
 
-  const handleToggleFolder = (index) => {
+  //   const handleEditFolder = (index) => {
+  //     const folderName = prompt("Enter new folder name:");
+  //     if (
+  //       folderName &&
+  //       selectedFolder !== null &&
+  //       selectedFolder >= 0 &&
+  //       selectedFolder < folders.length &&
+  //       index >= 0 &&
+  //       index < folders[selectedFolder].folders.length
+  //     ) {
+  //       const updatedFolders = [...folders];
+  //       updatedFolders[selectedFolder].folders[index].name = folderName;
+  //       setFolders(updatedFolders);
+  //     }
+  //   };
+
+  //   const handleDeleteFolder = (index) => {
+  //       console.log("index", index);
+  //       if (selectedFolder !== null) {
+  //           const updatedFolders = [...folders];
+  //           updatedFolders[selectedFolder].folders.splice(index, 1);
+  //           setFolders(updatedFolders);
+  //         }
+  //     };
+
+  const handleEditFolder = (folder) => {
+    const folderName = prompt("Enter new folder name:");
+    if (folderName) {
+      const updatedFolders = folders.map((f) =>
+        f === folder ? { ...f, name: folderName } : f
+      );
+      setFolders(updatedFolders);
+      setSelectedFolder({ ...folder, name: folderName });
+    }
+  };
+
+  const handleDeleteFolder = (folder) => {
+    const updatedFolders = folders.filter((f) => f !== folder);
+    setFolders(updatedFolders);
+    setSelectedFolder(null);
+  };
+  const handleEditFile = (index) => {
+    const fileName = prompt("Enter new file name:");
+    if (fileName) {
+      const updatedFolders = [...folders];
+      updatedFolders[selectedFolder].files[index].name = fileName;
+      setFolders(updatedFolders);
+    }
+  };
+  const handleDeleteFile = (index) => {
     const updatedFolders = [...folders];
-    updatedFolders[index].isOpen = !updatedFolders[index].isOpen;
+    updatedFolders[selectedFolder].files.splice(index, 1);
     setFolders(updatedFolders);
   };
 
+  const handleToggleFolder = (index) => {
+    if (selectedFolder === index) {
+      setSelectedFolder(null);
+    } else {
+      setSelectedFolder(index);
+    }
+  };
+
   const handleCreateSubFolder = (index) => {
-    const folderName = prompt("Enter folder name:");
+    const folderName = prompt("Enter subfolder name:");
     if (folderName) {
       const updatedFolders = [...folders];
       updatedFolders[index].folders.push({
         name: folderName,
-        isOpen: false,
         folders: [],
         files: [],
       });
@@ -48,7 +101,7 @@ const FolderStructure = () => {
   };
 
   const handleCreateSubFile = (index) => {
-    const fileName = prompt("Enter file name:");
+    const fileName = prompt("Enter subfile name:");
     if (fileName) {
       const updatedFolders = [...folders];
       updatedFolders[index].files.push({ name: fileName });
@@ -56,181 +109,117 @@ const FolderStructure = () => {
     }
   };
 
-  //   const handleCreateFolder = () => {
-  //     const folderName = prompt('Enter folder name:');
-  //     if (folderName) {
-  //       setFolders([...folders, { name: folderName, isOpen: false, folders: [], files: [] }]);
-  //     }
-  //   };
-
-  //   const handleCreateFile = () => {
-  //     const fileName = prompt('Enter file name:');
-  //     if (fileName) {
-  //       setFiles([...files, { name: fileName }]);
-  //     }
-  //   };
-
-  const handleDeleteFolder = (index) => {
-    const updatedFolders = [...folders];
-    updatedFolders.splice(index, 1);
-    setFolders(updatedFolders);
-  };
-
-  const handleDeleteFile = (index) => {
-    const updatedFiles = [...files];
-    updatedFiles.splice(index, 1);
-    setFiles(updatedFiles);
-  };
-
-  const handleEditFolder = (index) => {
-    const folderName = prompt("Enter new folder name:");
-    if (folderName) {
-      const updatedFolders = [...folders];
-      updatedFolders[index].name = folderName;
-      setFolders(updatedFolders);
-    }
-  };
-
-  //   const handleEditFile = (index) => {
-  //     const fileName = prompt("Enter new file name:");
-  //     if (fileName) {
-  //       const updatedFiles = [...files];
-  //       updatedFiles[index].name = fileName;
-  //       setFiles(updatedFiles);
-  //     }
-  //   };
-
-  const handleEditFile = (index) => {
-    const fileName = prompt("Enter new file name:");
-    if (fileName && index >= 0 && index < files.length) {
-      const updatedFiles = files.map((file, i) => {
-        if (i === index) {
-          return { ...file, name: fileName };
-        }
-        return file;
-      });
-      setFiles(updatedFiles);
-    }
-  };
-
   return (
-    <div className=" p-4 bg-[#0d0f11] rounded-sm">
-      <div className=" border-b-2  border-[#2b2f35] mb-2 pb-2 flex items-center justify-between">
-        <div className="text-md">Folders & Files</div>
-        <button
-          onClick={handleCreateFolder}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
-        >
-          <TbFolderPlus />
-        </button>
-        <button
-          onClick={handleCreateFile}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-2"
-        >
-          <LuFilePlus2 />
-        </button>
+    <div className="p-4 bg-gray-800 text-white rounded">
+      <div className="flex justify-between items-center mb-4 border-b-2">
+        <div className="text-md font-bold ">Folders & Files</div>
+        <div>
+          <button
+            onClick={handleCreateFolder}
+            className="  text-white font-bold  rounded mr-2"
+          >
+            <MdFolder size={16} />
+          </button>
+          <button
+            onClick={handleCreateFile}
+            className="  text-white font-bold  rounded"
+          >
+            <MdInsertDriveFile size={16} />
+          </button>
+        </div>
       </div>
-
       <ul>
-        {folders.map((folder, index) => (
+        {folders.map((item, index) => (
           <li key={index}>
             <div
+              className={`cursor-pointer flex items-center justify-between
+
+               ${
+                 selectedFolder === index
+                   ? "bg-blue-700 p-1 rounded-sm mb-2 "
+                   : ""
+               }
+
+              `}
               onClick={() => handleToggleFolder(index)}
-              className="flex justify-between"
             >
-              {folder.isOpen ? "▼" : "►"} {folder.name}
-              <div>
-                <button onClick={() => handleEditFolder(index)}>
-                  <MdOutlineDriveFileRenameOutline />
-                </button>
-                <button onClick={() => handleDeleteFolder(index)}>
-                  <MdDeleteOutline />
-                </button>
-              </div>
+              {item.isFile ? <MdInsertDriveFile /> : <MdFolder />}
+              <span className="ml-2">{item.name}</span>
+              {!item.isFile && (
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => handleEditFolder(index)}
+                    className="text-white"
+                  >
+                    <MdCreate size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteFolder(index)}
+                    className="text-white"
+                  >
+                    <MdDelete size={16} />
+                  </button>
+                </div>
+              )}
             </div>
-            {folder.isOpen && (
+            {selectedFolder === index && (
               <ul>
-                <li>
+                {item.folders.map((folder, subIndex) => (
+                  <li key={subIndex}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-10">
+                        <MdFolder /> {folder.name}
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => handleEditFolder(subIndex)}
+                          className="text-blue-500"
+                        >
+                          <MdCreate />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteFolder(subIndex)}
+                          className="text-red-500"
+                        >
+                          <MdDelete />
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+                {item.files.map((file, subIndex) => (
+                  <li key={subIndex}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-10">
+                        <MdInsertDriveFile /> {file.name}
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => handleEditFile(subIndex)}
+                          className="text-blue-500"
+                        >
+                          <MdCreate />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteFile(subIndex)}
+                          className="text-red-500"
+                        >
+                          <MdDelete />
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+                <li className="flex gap-2 justify-between">
                   <button onClick={() => handleCreateSubFolder(index)}>
-                    Create Subfolder
+                    Add Subfolder
                   </button>
                   <button onClick={() => handleCreateSubFile(index)}>
-                    Create Subfile
+                    Add Subfile
                   </button>
                 </li>
-                {folder.folders.map((subFolder, subIndex) => (
-                  <li key={subIndex}>
-                    <div onClick={() => handleToggleFolder(subIndex)}>
-                      {subFolder.isOpen ? "▼" : "►"} {subFolder.name}
-                      <button onClick={() => handleEditFolder(subIndex)}>
-                        Edit
-                      </button>
-                      <button onClick={() => handleDeleteFolder(subIndex)}>
-                        Delete
-                      </button>
-                    </div>
-                    {subFolder.isOpen && (
-                      <ul>
-                        <li>
-                          <button
-                            onClick={() => handleCreateSubFolder(subIndex)}
-                          >
-                            Create Subfolder
-                          </button>
-                        </li>
-                        <li>
-                          <button onClick={() => handleCreateSubFile(subIndex)}>
-                            Create Subfile
-                          </button>
-                        </li>
-                        {subFolder.folders.map((subSubFolder, subSubIndex) => (
-                          <li key={subSubIndex}>
-                            <div>{subSubFolder.name}</div>
-                            <button onClick={() => handleEditFolder(subIndex)}>
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDeleteFolder(subIndex)}
-                            >
-                              Delete
-                            </button>
-                          </li>
-                        ))}
-                        {subFolder.files.map((subFile, subFileIndex) => (
-                          <li key={subFileIndex}>
-                            <div>{subFile.name}</div>
-                            <button onClick={() => handleEditFile(fileIndex)}>
-                              Edit
-                            </button>
-                            <button onClick={() => handleDeleteFile(fileIndex)}>
-                              Delete
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-                {folder.files.map((file, fileIndex) => (
-                  <li key={fileIndex}>
-                    <div>{file.name}</div>
-                    <button onClick={() => handleEditFile(fileIndex)}>
-                      Edit
-                    </button>
-                    <button onClick={() => handleDeleteFile(fileIndex)}>
-                      Delete
-                    </button>
-                  </li>
-                ))}
               </ul>
             )}
-          </li>
-        ))}
-        {files.map((file, index) => (
-          <li key={index}>
-            <div>{file.name}</div>
-            <button onClick={() => handleEditFile(fileIndex)}>Edit</button>
-            <button onClick={() => handleDeleteFile(fileIndex)}>Delete</button>
           </li>
         ))}
       </ul>
