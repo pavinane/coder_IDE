@@ -65,6 +65,7 @@ const FolderStructure = () => {
     setFolders(updatedFolders);
     setSelectedFolder(null);
   };
+
   const handleEditFile = (index) => {
     const fileName = prompt("Enter new file name:");
     if (fileName) {
@@ -73,6 +74,7 @@ const FolderStructure = () => {
       setFolders(updatedFolders);
     }
   };
+
   const handleDeleteFile = (index) => {
     const updatedFolders = [...folders];
     updatedFolders[selectedFolder].files.splice(index, 1);
