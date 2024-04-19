@@ -6,9 +6,16 @@ import {
   MdDelete,
 } from "react-icons/md";
 
-const FolderStructure = () => {
-  const [folders, setFolders] = useState([]);
-  const [selectedFolder, setSelectedFolder] = useState(null);
+const FolderStructure = ({
+  folders,
+  setFolders,
+  selectedFolder,
+  setSelectedFolder,
+  selectedFiles,
+  setSelectedFiles,
+}) => {
+  // const [folders, setFolders] = useState([]);
+  // const [selectedFolder, setSelectedFolder] = useState(null);
 
   const handleCreateFolder = () => {
     const folderName = prompt("Enter folder name:");
@@ -23,31 +30,6 @@ const FolderStructure = () => {
       setFolders([...folders, { name: fileName, isFile: true }]);
     }
   };
-
-  //   const handleEditFolder = (index) => {
-  //     const folderName = prompt("Enter new folder name:");
-  //     if (
-  //       folderName &&
-  //       selectedFolder !== null &&
-  //       selectedFolder >= 0 &&
-  //       selectedFolder < folders.length &&
-  //       index >= 0 &&
-  //       index < folders[selectedFolder].folders.length
-  //     ) {
-  //       const updatedFolders = [...folders];
-  //       updatedFolders[selectedFolder].folders[index].name = folderName;
-  //       setFolders(updatedFolders);
-  //     }
-  //   };
-
-  //   const handleDeleteFolder = (index) => {
-  //       console.log("index", index);
-  //       if (selectedFolder !== null) {
-  //           const updatedFolders = [...folders];
-  //           updatedFolders[selectedFolder].folders.splice(index, 1);
-  //           setFolders(updatedFolders);
-  //         }
-  //     };
 
   const handleEditFolder = (folder) => {
     const folderName = prompt("Enter new folder name:");
@@ -72,28 +54,30 @@ const FolderStructure = () => {
       const updatedFolders = [...folders];
       updatedFolders[selectedFolder].files[index].name = fileName;
       setFolders(updatedFolders);
+      setSelectedFolder(updatedFolders[selectedFolder].files[index].name);
     }
   };
 
   const handleDeleteFile = (index) => {
     const updatedFolders = [...folders];
+    setSelectedFolder(updatedFolders[selectedFolder].files[index].name);
     updatedFolders[selectedFolder].files.splice(index, 1);
     setFolders(updatedFolders);
   };
 
-  const handleToggleFolder = (index) => {
-    if (selectedFolder === index) {
-      setSelectedFolder(null);
-    } else {
-      setSelectedFolder(index);
-    }
-  };
+  // const handleToggleFolder = (index) => {
+  //   if (selectedFolder === index) {
+  //     setSelectedFolder(null);
+  //   } else {
+  //     setSelectedFolder(index);
+  //   }
+  // };
 
   const handleCreateSubFolder = (index) => {
     const folderName = prompt("Enter subfolder name:");
     if (folderName) {
       const updatedFolders = [...folders];
-      updatedFolders[index].folders.push({
+      updatedFolders[index].folders?.push({
         name: folderName,
         folders: [],
         files: [],
@@ -106,13 +90,29 @@ const FolderStructure = () => {
     const fileName = prompt("Enter subfile name:");
     if (fileName) {
       const updatedFolders = [...folders];
-      updatedFolders[index].files.push({ name: fileName });
+      updatedFolders[index].files?.push({ name: fileName });
       setFolders(updatedFolders);
     }
   };
 
+  const handleToggleFolder = (index) => {
+    if (selectedFolder === index) {
+      setSelectedFolder(null);
+    } else {
+      setSelectedFolder(index);
+    }
+  };
+
+  const handleToggleFile = (file) => {
+    if (selectedFiles.includes(file)) {
+      setSelectedFiles(selectedFiles.filter((f) => f !== file));
+    } else {
+      setSelectedFiles([...selectedFiles, file]);
+    }
+  };
+
   return (
-    <div className="p-4 bg-gray-800 text-white rounded">
+    <div className="p-4 bg-gray-800 text-white rounded h-[100%]">
       <div className="flex justify-between items-center mb-4 border-b-2">
         <div className="text-md font-bold ">Folders & Files</div>
         <div>
@@ -131,14 +131,14 @@ const FolderStructure = () => {
         </div>
       </div>
       <ul>
-        {folders.map((item, index) => (
+        {folders?.map((item, index) => (
           <li key={index}>
             <div
               className={`cursor-pointer flex items-center justify-between
 
                ${
                  selectedFolder === index
-                   ? "bg-blue-700 p-1 rounded-sm mb-2 "
+                   ? "text-blue-700 p-1 rounded-sm mb-2 "
                    : ""
                }
 
@@ -191,10 +191,18 @@ const FolderStructure = () => {
                 ))}
                 {item.files?.map((file, subIndex) => (
                   <li key={subIndex}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center justify-between gap-10">
-                        <MdInsertDriveFile /> {file.name}
+                    <div
+                      className={`cursor-pointer flex items-center justify-between ${
+                        selectedFiles.includes(file.name)
+                          ? "bg-blue-700 p-1 rounded-sm mb-2"
+                          : ""
+                      }`}
+                      onClick={() => handleToggleFile(file.name)}
+                    >
+                      <div className="flex  items-center justify-center gap-10">
+                        <MdInsertDriveFile /> <span>{file.name}</span>
                       </div>
+
                       <div>
                         <button
                           onClick={() => handleEditFile(subIndex)}

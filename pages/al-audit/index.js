@@ -1,30 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
-// import ErrorWarningComponent from "../components/ErrorWarning";
-// import "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css";
 import CodeEditer from "../components/CodeEditer";
 import FolderStructure from "../components/FolderStructure";
 
 function AlAudit() {
-  const folders = [
-    {
-      name: "Folder 1",
-      files: ["File 1", "File 2", "File 3"],
-    },
-    {
-      name: "Folder 2",
-      files: ["File 4", "File 5"],
-    },
-  ];
+  const [folders, setFolders] = useState([]);
+  const [selectedFolder, setSelectedFolder] = useState({
+    index: null,
+    item: null,
+  });
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const code = `function hello() {
-    console.log('Hello, world!');
-  }`;
+  const handleToggleFolder = (index, item) => {
+    setSelectedFolder({ index, item });
+    setSelectedFiles([]);
+  };
 
-  const errors = ["Error 1", "Error 2"];
-  const warnings = ["Warning 1", "Warning 2"];
+  // const handleToggleFile = (file) => {
+  //   if (selectedFiles.includes(file)) {
+  //     setSelectedFiles(selectedFiles.filter((f) => f !== file));
+  //   } else {
+  //     setSelectedFiles([...selectedFiles, file]);
+  //   }
+  // };
+
   return (
     <Layout>
       <div className=" p-4 bg-[#191d23] min-h-screen rounded-sm ">
@@ -35,7 +36,6 @@ function AlAudit() {
               Audit Now
             </button>
             <button className="text-[#1479f6] bg-[#152c46] p-2 rounded-sm w-36">
-              {" "}
               Option
             </button>
           </div>
@@ -43,10 +43,27 @@ function AlAudit() {
         <div>
           <div className="flex mt-4 justify-between gap-2 max-h-screen ">
             <div className="bg-[#0d0f11] w-96 rounded-sm">
-              <FolderStructure />
+              <FolderStructure
+                folders={folders}
+                setFolders={setFolders}
+                selectedFolder={selectedFolder.index}
+                setSelectedFolder={handleToggleFolder}
+                selectedFiles={selectedFiles}
+                setSelectedFiles={setSelectedFiles}
+              />
             </div>
             <div className="bg-[#0d0f11] w-full rounded-sm">
-              <CodeEditer code={code} />
+              <div>
+                <ul>
+                  {selectedFiles.map((file, index) => (
+                    <li key={index}>{file}</li>
+                  ))}
+                </ul>
+              </div>
+              {selectedFolder.index !== null &&
+                selectedFolder.index < folders.length && (
+                  <CodeEditer fileName={selectedFolder.item?.name} />
+                )}
             </div>
             <div className="bg-[#0d0f11] w-96 rounded-sm">
               {/* <ErrorWarningComponent errors={errors} warnings={warnings} /> */}

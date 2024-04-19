@@ -1,19 +1,18 @@
-// CodeEditorComponent.js
 "use client";
 import React from "react";
-// import MonacoEditor from "react-monaco-editor";
+import Editor from "@monaco-editor/react";
 
-const CodeEditer = ({ code }) => {
+const CodeEditer = ({ folder }) => {
   return (
     <div>
-      {/* <MonacoEditor
-        width="800"
-        height="600"
-        language="javascript"
+      <Editor
+        height="90vh"
+        // className="min-h-screen"
+        defaultLanguage="javascript"
+        defaultValue="// some comment"
         theme="vs-dark"
-        value={code}
-      /> */}
-      hii
+        // onMount={handleEditorDidMount}
+      />
     </div>
   );
 };
