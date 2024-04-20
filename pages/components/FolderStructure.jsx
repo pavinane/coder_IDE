@@ -7,6 +7,7 @@ import {
 } from "react-icons/md";
 
 import { FaRegFolderClosed } from "react-icons/fa6";
+// import { BiSolidLeftArrow } from "react-icons/bi";
 
 const FolderStructure = ({
   folders,
@@ -115,7 +116,7 @@ const FolderStructure = ({
 
   return (
     <div className="p-4 bg-[#13161a] text-white rounded h-[100%]">
-      <div className="flex justify-between items-center mb-4 border-b-2">
+      <div className="flex justify-between items-center mb-4 border-b-2 border-[#5d677d] pb-2">
         <div className="text-md font-bold ">Folders & Files</div>
         <div>
           <button
@@ -136,8 +137,7 @@ const FolderStructure = ({
         {folders?.map((item, index) => (
           <li key={index}>
             <div
-              className={`cursor-pointer flex items-center justify-between
-
+              className={`cursor-pointer flex items-center
                ${
                  selectedFolder === index
                    ? "text-[#1479f6] p-1 rounded-sm mb-2  font-semibold "
@@ -147,10 +147,19 @@ const FolderStructure = ({
               `}
               onClick={() => handleToggleFolder(index)}
             >
-              {item.isFile ? <MdInsertDriveFile /> : <FaRegFolderClosed />}
-              <span className="ml-2">{item.name}</span>
+              <>
+                {item.isFile ? (
+                  <MdInsertDriveFile />
+                ) : (
+                  <div className="flex items-center">
+                    <FaRegFolderClosed />
+                    <span className="ml-2">{item.name}</span>
+                  </div>
+                )}
+              </>
+
               {!item.isFile && (
-                <div className="flex gap-4">
+                <div className="flex gap-4 justify-end">
                   <button
                     onClick={() => handleEditFolder(index)}
                     className="text-white"

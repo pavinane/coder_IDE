@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import CodeEditer from "../components/CodeEditer";
 import FolderStructure from "../components/FolderStructure";
 import { MdClose } from "react-icons/md";
+import CountIssue from "../components/CountIssue";
 
 function AlAudit() {
   const [folders, setFolders] = useState([]);
@@ -13,7 +14,6 @@ function AlAudit() {
     item: null,
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
-  // const [active, setActive] = useState(false);
   const [activeFile, setActiveFile] = useState(null);
 
   const handleToggleFolder = (index, item) => {
@@ -22,15 +22,6 @@ function AlAudit() {
     setActiveFile(null);
   };
 
-  // const handleToggleFile = (file) => {
-  //   console.log("file", file);
-  //   if (selectedFiles.includes(file)) {
-  //     setSelectedFiles(selectedFiles.filter((f) => f !== file));
-  //     setActive(true);
-  //   } else {
-  //     setSelectedFiles([...selectedFiles, file]);
-  //   }
-  // };
   const handleToggleFile = (file) => {
     if (
       activeFile === file
@@ -63,7 +54,7 @@ function AlAudit() {
         </div>
         <div>
           <div className="flex mt-4 justify-between gap-2 max-h-screen ">
-            <div className="bg-[#0d0f11] w-96 rounded-sm">
+            <div className="bg-[#0d0f11] w-1/2 rounded-sm">
               <FolderStructure
                 folders={folders}
                 setFolders={setFolders}
@@ -102,15 +93,19 @@ function AlAudit() {
                   <CodeEditer fileName={selectedFolder.item?.name} />
                 )} */}
               {selectedFolder.index !== null &&
-                selectedFolder.index < folders.length && (
-                  <CodeEditer
-                    fileName={activeFile || selectedFolder.item?.name}
-                  />
-                )}
+              selectedFolder.index < folders.length ? (
+                <CodeEditer
+                  fileName={activeFile || selectedFolder.item?.name}
+                />
+              ) : (
+                <div className="min-h-screen text-center p-2 ">
+                  Ready to Write code
+                </div>
+              )}
             </div>
-            <div className="bg-[#0d0f11] w-96 rounded-sm">
+            <div className="bg-[#0d0f11] w-1/2 rounded-sm">
               {/* <ErrorWarningComponent errors={errors} warnings={warnings} /> */}
-              <FolderStructure />
+              <CountIssue />
             </div>
           </div>
         </div>
