@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { FaCircle } from "react-icons/fa";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward, IoIosInformationCircle } from "react-icons/io";
+import { FaFlag } from "react-icons/fa";
 
 function CountIssue() {
-  const [activeCurrentFile, setActiveCurrentFile] = useState(false);
+  const [activeCurrentFile, setActiveCurrentFile] = useState(true);
   const [activeFullProject, setActiveFullProject] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState(null);
   const [selectedBlock, setSelectedBlock] = useState(null);
@@ -40,20 +41,49 @@ function CountIssue() {
   return (
     <div className="p-4 flex gap-2 flex-col ">
       {selectedBlock ? (
-        <div className="bg-[#1e232b] p-3 rounded-sm">
-          <div className="flex items-center gap-2 justify-between">
-            <FaCircle color={`${selectedBlock.color}`} />
-            <h1 className="text-2xl border-r-2 border-[#5d677d] w-16">
-              {selectedBlock.num}
-            </h1>
-            <p className="text-[#5d677d] font-normal text-md">
-              {selectedBlock.name}
+        <div>
+          <div className="flex items-center mb-2">
+            <p
+              className="text-[12px] text-[#5d677d] cursor-pointer"
+              onClick={() => setSelectedIssue(null)}
+            >
+              Count of Issue / &nbsp;
             </p>
+            <span
+              className="text-[12px] text-[#5d677d] cursor-pointer"
+              onClick={() => setSelectedBlock(null)}
+            >
+              {" "}
+              {selectedIssue?.name.length > 10
+                ? selectedIssue?.name.slice(0, 10) + "..."
+                : selectedIssue?.name}
+              /
+            </span>{" "}
+            <span className=" text-white text-[12px]  cursor-pointer">
+              {" "}
+              &nbsp;
+              {selectedIssue?.name}
+            </span>
+          </div>
+
+          <div className="bg-[#1e232b] p-3 rounded-sm">
+            <div className="flex items-center gap-2 justify-between">
+              <FaCircle color={`${selectedBlock.color}`} />
+              <h1 className="text-2xl border-r-2 border-[#5d677d] w-16">
+                {selectedBlock.num}
+              </h1>
+              <p className="text-[#5d677d] font-normal text-md">
+                {/* {selectedBlock.name} */}
+
+                {selectedBlock?.name.length > 20
+                  ? selectedBlock?.name.slice(0, 20) + "..."
+                  : selectedBlock?.name}
+              </p>
+            </div>
           </div>
         </div>
       ) : selectedIssue ? (
         <>
-          back
           <div className="border-b-2 border-[#5d677d] pb-2">
             <p
               className="text-sm text-[#5d677d] cursor-pointer"
@@ -137,7 +167,10 @@ function CountIssue() {
       )}
 
       {selectedIssue && selectedBlock === null && (
-        <div className="p-3 rounded-sm mt-4">
+        <div
+          className="p-3 rounded-sm mt-4"
+          style={{ maxHeight: "400px", overflow: "auto" }}
+        >
           <p className="text-sm text-[#fff] border-b-2 border-[#5d677d] pb-2 ">
             List of Issues :
           </p>
@@ -145,7 +178,6 @@ function CountIssue() {
             <div
               key={block.id}
               onClick={() => handleBlockClick(block)}
-              style={{ maxHeight: "400px", overflow: "auto" }}
               className="cursor-pointer flex items-center justify-between px-2 py-4 rounded-md mt-2 bg-[#374151] text-[#e5e7eb] "
             >
               <p className="text-sm border-r-2 border-[#5d677d] w-full">
@@ -158,47 +190,55 @@ function CountIssue() {
         </div>
       )}
       {selectedBlock !== null && (
-        <div className="bg-[#1e232b] p-2 border-b-2 border-[#5d677d]">
-          <div>
-            <div>
-              <h1 className="text-[#1479f6] text-sm">Description</h1>
+        <div>
+          <div className="bg-[#1e232b] p-2">
+            <div className=" border-b-2 border-[#5d677d] mb-4">
+              <div>
+                <div>
+                  <h1 className="text-[#1479f6] text-sm">Description</h1>
+                </div>
+                <p className="text-[12px] mt-2">
+                  Lorem ipsum dolor sit amet, consec ascing elit, sed do eiusmod
+                  tpor incididunt ut labo et dolore magna aliqua. Ut enim ad
+                  minim veniam, is nostrud exercitation ullamco lris nisi ut
+                  aliquip. Consectetur adiiscing elit, se do eiusmod tempor
+                  indidut ut lbore et ore magna aliqua. om ipsum dolor sit amet
+                  ectr ig elit, sed do eiusmod tempor ididunt utio labore et
+                  dolore magna aliqua. Lorem ipsum dolor sit amet, consec ascing
+                  elit, sed do eiusmod tpor incididunt ut labo et dolore magna
+                  aliqua.
+                </p>
+              </div>
+              <div className="m-2">
+                <div>
+                  <h1 className="text-[#1479f6] text-sm">Remediation:</h1>
+                </div>
+                <p className="text-[12px] mt-2">
+                  Lorem ipsum dolor sit amet, consec ascing elit, sed do eiusmod
+                  tpor incididunt ut labo et dolore magna aliqua. Ut enim ad
+                  minim veniam, is nostrud exercitation ullamco lris nisi ut
+                  aliquip. Consectetur adiiscing elit, se do eiusmod tempor
+                  indidut ut lbore et ore magna aliqua.
+                </p>
+              </div>
             </div>
-            <p className="text-[12px] mt-2">
-              Lorem ipsum dolor sit amet, consec ascing elit, sed do eiusmod
-              tpor incididunt ut labo et dolore magna aliqua. Ut enim ad minim
-              veniam, is nostrud exercitation ullamco lris nisi ut aliquip.
-              Consectetur adiiscing elit, se do eiusmod tempor indidut ut lbore
-              et ore magna aliqua. om ipsum dolor sit amet ectr ig elit, sed do
-              eiusmod tempor ididunt utio labore et dolore magna aliqua. Lorem
-              ipsum dolor sit amet, consec ascing elit, sed do eiusmod tpor
-              incididunt ut labo et dolore magna aliqua. Ut enim ad minim
-              veniam, is nostrud exercitation ullamco lris nisi ut aliquip.
-              Consectetur adiiscing elit, se do eiusmod tempor indidut ut lbore
-              et ore magna aliqua. om ipsum dolor sit amet ectr ig elit, sed do
-              eiusmod tempor ididunt utio labore et dolore magna aliqua
-            </p>
-          </div>
-          <div className="m-2">
-            <div>
-              <h1 className="text-[#1479f6] text-sm">Remediation:</h1>
-            </div>
-            <p className="text-[12px] mt-2">
-              Lorem ipsum dolor sit amet, consec ascing elit, sed do eiusmod
-              tpor incididunt ut labo et dolore magna aliqua. Ut enim ad minim
-              veniam, is nostrud exercitation ullamco lris nisi ut aliquip.
-              Consectetur adiiscing elit, se do eiusmod tempor indidut ut lbore
-              et ore magna aliqua.
-            </p>
-          </div>
-          <div>
-            <button
-              onClick={handleFullProjectClick}
-              className="w-32 
+            <div className="flex justify-end gap-2 items-center mb-2 ">
+              <button
+                onClick={handleFullProjectClick}
+                className="w-40 
                    bg-[#1479f6] p-2 rounded-sm"
-            >
-              Auto Fix Code
-            </button>
+              >
+                Auto Fix Code
+              </button>
+              <div className="border-2 p-2 border-red-600">
+                <FaFlag color="red" />
+              </div>
+            </div>
           </div>
+          <p className="text-sm p-2 flex items-center gap-2">
+            <IoIosInformationCircle color="#fff" />
+            Changes done in the code can be undone.
+          </p>
         </div>
       )}
     </div>
