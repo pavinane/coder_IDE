@@ -23,8 +23,14 @@ function CountIssue() {
   };
 
   const handleIssueClick = (issue) => {
-    setSelectedIssue(issue);
-    setSelectedBlock(null);
+    // setSelectedIssue(issue);
+    // setSelectedBlock(null);
+    if (selectedIssue === issue) {
+      setSelectedIssue(null); // Close the selected issue if already open
+    } else {
+      setSelectedIssue(issue); // Open the selected issue
+      setSelectedBlock(null); // Close any selected block
+    }
   };
 
   const handleBlockClick = (block) => {
@@ -47,6 +53,7 @@ function CountIssue() {
         </div>
       ) : selectedIssue ? (
         <>
+          back
           <div className="border-b-2 border-[#5d677d] pb-2">
             <p
               className="text-sm text-[#5d677d] cursor-pointer"
@@ -56,7 +63,6 @@ function CountIssue() {
               <span className="text-white "> {selectedIssue.name}</span>
             </p>
           </div>
-
           <div className="bg-[#1e232b] p-3 rounded-sm">
             <div className="flex items-center gap-2 justify-between">
               <FaCircle color={`${selectedIssue.color}`} />
@@ -78,7 +84,7 @@ function CountIssue() {
           <div className="border-b-2 border-[#5d677d] pb-2 text-md">
             Count Of Issues
           </div>
-          <div className="bg-[#1e232b] p-1 rounded-sm flex justify-between text-center mt-4">
+          <div className="bg-[#1e232b] p-2 rounded-sm flex justify-between text-center mt-4">
             <button
               onClick={handleCurrentFileClick}
               className={`w-32 ${
@@ -130,11 +136,8 @@ function CountIssue() {
         </div>
       )}
 
-      {selectedIssue && (
-        <div
-          className="p-3 rounded-sm mt-4"
-          style={{ maxHeight: "400px", overflow: "auto" }}
-        >
+      {selectedIssue && selectedBlock === null && (
+        <div className="p-3 rounded-sm mt-4">
           <p className="text-sm text-[#fff] border-b-2 border-[#5d677d] pb-2 ">
             List of Issues :
           </p>
@@ -142,6 +145,7 @@ function CountIssue() {
             <div
               key={block.id}
               onClick={() => handleBlockClick(block)}
+              style={{ maxHeight: "400px", overflow: "auto" }}
               className="cursor-pointer flex items-center justify-between px-2 py-4 rounded-md mt-2 bg-[#374151] text-[#e5e7eb] "
             >
               <p className="text-sm border-r-2 border-[#5d677d] w-full">
@@ -151,6 +155,50 @@ function CountIssue() {
               <IoIosArrowForward size={20} />
             </div>
           ))}
+        </div>
+      )}
+      {selectedBlock !== null && (
+        <div className="bg-[#1e232b] p-2 border-b-2 border-[#5d677d]">
+          <div>
+            <div>
+              <h1 className="text-[#1479f6] text-sm">Description</h1>
+            </div>
+            <p className="text-[12px] mt-2">
+              Lorem ipsum dolor sit amet, consec ascing elit, sed do eiusmod
+              tpor incididunt ut labo et dolore magna aliqua. Ut enim ad minim
+              veniam, is nostrud exercitation ullamco lris nisi ut aliquip.
+              Consectetur adiiscing elit, se do eiusmod tempor indidut ut lbore
+              et ore magna aliqua. om ipsum dolor sit amet ectr ig elit, sed do
+              eiusmod tempor ididunt utio labore et dolore magna aliqua. Lorem
+              ipsum dolor sit amet, consec ascing elit, sed do eiusmod tpor
+              incididunt ut labo et dolore magna aliqua. Ut enim ad minim
+              veniam, is nostrud exercitation ullamco lris nisi ut aliquip.
+              Consectetur adiiscing elit, se do eiusmod tempor indidut ut lbore
+              et ore magna aliqua. om ipsum dolor sit amet ectr ig elit, sed do
+              eiusmod tempor ididunt utio labore et dolore magna aliqua
+            </p>
+          </div>
+          <div className="m-2">
+            <div>
+              <h1 className="text-[#1479f6] text-sm">Remediation:</h1>
+            </div>
+            <p className="text-[12px] mt-2">
+              Lorem ipsum dolor sit amet, consec ascing elit, sed do eiusmod
+              tpor incididunt ut labo et dolore magna aliqua. Ut enim ad minim
+              veniam, is nostrud exercitation ullamco lris nisi ut aliquip.
+              Consectetur adiiscing elit, se do eiusmod tempor indidut ut lbore
+              et ore magna aliqua.
+            </p>
+          </div>
+          <div>
+            <button
+              onClick={handleFullProjectClick}
+              className="w-32 
+                   bg-[#1479f6] p-2 rounded-sm"
+            >
+              Auto Fix Code
+            </button>
+          </div>
         </div>
       )}
     </div>
