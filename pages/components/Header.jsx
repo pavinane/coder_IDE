@@ -14,7 +14,7 @@ function Header() {
   const router = useRouter();
   const handleMenuClick = (index, href) => {
     setActiveMenu(index);
-    router.push(href);
+    // router.push(href);
   };
   const style = "avataaars"; // Style of the avatar
   const seed = Math.random().toString(36).substring(2, 15); // Random seed for variation

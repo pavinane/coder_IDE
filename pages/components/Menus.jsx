@@ -31,18 +31,18 @@ export const MenusList = [
   },
   {
     name: "Manual Audit",
-    href: "/manualaudit",
+    // href: "/manualaudit",
   },
   {
     name: "RedTeam",
-    href: "/redteam",
+    // href: "/redteam",
   },
   {
     name: "Monitor",
-    href: "/monitor",
+    // href: "/monitor",
   },
   {
     name: "Incident Response",
-    href: "/incidentresponse",
+    // href: "/incidentresponse",
   },
 ];

@@ -137,7 +137,7 @@ const FolderStructure = ({
         {folders?.map((item, index) => (
           <li key={index}>
             <div
-              className={`cursor-pointer flex items-center
+              className={`cursor-pointer flex items-center w-full justify-between
                ${
                  selectedFolder === index
                    ? "text-[#1479f6] p-1 rounded-sm mb-2  font-semibold "
@@ -180,7 +180,7 @@ const FolderStructure = ({
                 {item.folders?.map((folder, subIndex) => (
                   <li key={subIndex}>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center justify-between gap-10">
+                      <div className="flex items-center justify-between gap-2">
                         <MdFolder /> {folder.name}
                       </div>
                       <div>
@@ -210,7 +210,7 @@ const FolderStructure = ({
                       }`}
                       onClick={() => handleToggleFile(file.name)}
                     >
-                      <div className="flex  items-center justify-center gap-10">
+                      <div className="flex  items-center justify-center gap-2">
                         <MdInsertDriveFile /> <span>{file.name}</span>
                       </div>
 

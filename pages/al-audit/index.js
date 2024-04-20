@@ -81,7 +81,7 @@ function AlAudit() {
 
             <div className="bg-[#1e232b] w-full rounded-sm relative">
               <div
-                className=" absolute -left-2 top-96 z-10 bg-[#1479f6] p-1"
+                className=" absolute -left-2 top-2/3 z-10 bg-[#1479f6] p-1"
                 onClick={handleToggleFolderStructure}
               >
                 {showFolderStructure === true ? (
@@ -91,7 +91,7 @@ function AlAudit() {
                 )}
               </div>
               <div
-                className=" absolute -right-2 top-96 z-10 bg-[#1479f6] p-1"
+                className=" absolute -right-2 top-2/3 z-10 bg-[#1479f6] p-1"
                 onClick={handleToggleCountIssue}
               >
                 {showCountIssue === true ? (
