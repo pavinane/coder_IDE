@@ -6,6 +6,7 @@ import CodeEditer from "../components/CodeEditer";
 import FolderStructure from "../components/FolderStructure";
 import { MdClose } from "react-icons/md";
 import CountIssue from "../components/CountIssue";
+import { LuArrowLeftToLine, LuArrowRightToLine } from "react-icons/lu";
 
 function AlAudit() {
   const [folders, setFolders] = useState([]);
@@ -15,6 +16,9 @@ function AlAudit() {
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
+
+  const [showCountIssue, setShowCountIssue] = useState(true);
+  const [showFolderStructure, setShowFolderStructure] = useState(true);
 
   const handleToggleFolder = (index, item) => {
     setSelectedFolder({ index, item });
@@ -38,6 +42,14 @@ function AlAudit() {
   const handleRemoveFile = (file) => {
     setSelectedFiles(selectedFiles.filter((f) => f !== file));
   };
+
+  const handleToggleCountIssue = () => {
+    setShowCountIssue((prevState) => !prevState);
+  };
+
+  const handleToggleFolderStructure = () => {
+    setShowFolderStructure((prevState) => !prevState);
+  };
   return (
     <Layout>
       <div className=" p-4 bg-[#191d23] min-h-screen rounded-sm ">
@@ -54,17 +66,40 @@ function AlAudit() {
         </div>
         <div>
           <div className="flex mt-4 justify-between gap-2 max-h-screen ">
-            <div className="bg-[#0d0f11] w-1/2 rounded-sm">
-              <FolderStructure
-                folders={folders}
-                setFolders={setFolders}
-                selectedFolder={selectedFolder.index}
-                setSelectedFolder={handleToggleFolder}
-                selectedFiles={selectedFiles}
-                setSelectedFiles={setSelectedFiles}
-              />
-            </div>
-            <div className="bg-[#1e232b] w-full rounded-sm">
+            {showFolderStructure && (
+              <div className="bg-[#0d0f11] w-1/2 rounded-sm">
+                <FolderStructure
+                  folders={folders}
+                  setFolders={setFolders}
+                  selectedFolder={selectedFolder.index}
+                  setSelectedFolder={handleToggleFolder}
+                  selectedFiles={selectedFiles}
+                  setSelectedFiles={setSelectedFiles}
+                />
+              </div>
+            )}
+
+            <div className="bg-[#1e232b] w-full rounded-sm relative">
+              <div
+                className=" absolute -left-2 top-96 z-10 bg-[#1479f6] p-1"
+                onClick={handleToggleFolderStructure}
+              >
+                {showFolderStructure === true ? (
+                  <LuArrowLeftToLine />
+                ) : (
+                  <LuArrowRightToLine />
+                )}
+              </div>
+              <div
+                className=" absolute -right-2 top-96 z-10 bg-[#1479f6] p-1"
+                onClick={handleToggleCountIssue}
+              >
+                {showCountIssue === true ? (
+                  <LuArrowRightToLine />
+                ) : (
+                  <LuArrowLeftToLine />
+                )}
+              </div>
               <div>
                 <ul className="flex  ">
                   {selectedFiles.map((file, index) => (
@@ -88,10 +123,7 @@ function AlAudit() {
                   ))}
                 </ul>
               </div>
-              {/* {selectedFolder.index !== null &&
-                selectedFolder.index < folders.length && (
-                  <CodeEditer fileName={selectedFolder.item?.name} />
-                )} */}
+
               {selectedFolder.index !== null &&
               selectedFolder.index < folders.length ? (
                 <CodeEditer
@@ -103,10 +135,12 @@ function AlAudit() {
                 </div>
               )}
             </div>
-            <div className="bg-[#0d0f11] w-1/2 rounded-sm">
-              {/* <ErrorWarningComponent errors={errors} warnings={warnings} /> */}
-              <CountIssue />
-            </div>
+
+            {showCountIssue && (
+              <div className="bg-[#0d0f11] w-1/2 rounded-sm">
+                <CountIssue />
+              </div>
+            )}
           </div>
         </div>
       </div>
