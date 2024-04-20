@@ -43,10 +43,7 @@ function CountIssue() {
       {selectedBlock ? (
         <div>
           <div className="flex items-center mb-2">
-            <p
-              className="text-[12px] text-[#5d677d] cursor-pointer"
-              onClick={() => setSelectedIssue(null)}
-            >
+            <p className="text-[12px] text-[#5d677d] cursor-pointer">
               Count of Issue / &nbsp;
             </p>
             <span
@@ -73,8 +70,6 @@ function CountIssue() {
                 {selectedBlock.num}
               </h1>
               <p className="text-[#5d677d] font-normal text-md">
-                {/* {selectedBlock.name} */}
-
                 {selectedBlock?.name.length > 20
                   ? selectedBlock?.name.slice(0, 20) + "..."
                   : selectedBlock?.name}
@@ -103,10 +98,33 @@ function CountIssue() {
                 {selectedIssue.name}
               </p>
             </div>
-            {/* <div className="mt-2">
-            <IoIosArrowForward size={16} className="mx-2" />
-            <span className="text-[#5d677d]">{selectedIssue.name}</span>
-          </div> */}
+          </div>
+          {selectedIssue && selectedBlock === null && (
+            <div
+              className=" rounded-sm mt-4"
+              style={{ maxHeight: "400px", overflow: "auto" }}
+            >
+              <p className="text-sm text-[#fff] border-b-2 border-[#5d677d] pb-2 ">
+                List of Issues :
+              </p>
+              {selectedIssue.blocks.map((block, index) => (
+                <div
+                  key={block.id}
+                  onClick={() => handleBlockClick(block)}
+                  className="cursor-pointer flex items-center justify-between px-2 py-4 rounded-md mt-2 bg-[#374151] text-[#e5e7eb] "
+                >
+                  <p className="text-sm border-r-2 border-[#5d677d] w-full">
+                    # {index} &nbsp;
+                    {block.name}
+                  </p>
+                  <IoIosArrowForward size={20} />
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="flex gap-2">
+            <input type="checkbox" className=" w-4" />
+            <p>Exclude Dependencies</p>
           </div>
         </>
       ) : (
@@ -166,29 +184,6 @@ function CountIssue() {
         </div>
       )}
 
-      {selectedIssue && selectedBlock === null && (
-        <div
-          className="p-3 rounded-sm mt-4"
-          style={{ maxHeight: "400px", overflow: "auto" }}
-        >
-          <p className="text-sm text-[#fff] border-b-2 border-[#5d677d] pb-2 ">
-            List of Issues :
-          </p>
-          {selectedIssue.blocks.map((block, index) => (
-            <div
-              key={block.id}
-              onClick={() => handleBlockClick(block)}
-              className="cursor-pointer flex items-center justify-between px-2 py-4 rounded-md mt-2 bg-[#374151] text-[#e5e7eb] "
-            >
-              <p className="text-sm border-r-2 border-[#5d677d] w-full">
-                # {index} &nbsp;
-                {block.name}
-              </p>
-              <IoIosArrowForward size={20} />
-            </div>
-          ))}
-        </div>
-      )}
       {selectedBlock !== null && (
         <div>
           <div className="bg-[#1e232b] p-2">
