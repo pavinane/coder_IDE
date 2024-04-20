@@ -7,6 +7,8 @@ import FolderStructure from "../components/FolderStructure";
 import { MdClose } from "react-icons/md";
 import CountIssue from "../components/CountIssue";
 import { LuArrowLeftToLine, LuArrowRightToLine } from "react-icons/lu";
+import Upload from "../../assets/Upload.png";
+import Image from "next/image";
 
 function AlAudit() {
   const [folders, setFolders] = useState([]);
@@ -54,7 +56,10 @@ function AlAudit() {
     <Layout>
       <div className=" p-4 bg-[#191d23] min-h-screen rounded-sm ">
         <div className="flex justify-between items-center border-b-2 border-[#2b2f35] pb-4">
-          <h1 className="text-2xl">Sample Project</h1>
+          <div className="text-2xl flex items-center gap-2 ">
+            <Image src={Upload} alt="upload" className="" />
+            <div> Sample Project</div>
+          </div>
           <div className="two-cards flex justify-around w-80">
             <button className="bg-[#1479f6] text-white p-2 rounded-sm w-36">
               Audit Now

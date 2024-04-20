@@ -21,7 +21,7 @@ function Header() {
 
   // Generate the URL for the random avatar image
 
-  const avatarUrl1 = `https://api.dicebear.com/8.x/${style}/svg?seed=${seed}}`; // need to change seed
+  const avatarUrl1 = `https://api.dicebear.com/8.x/${style}/svg?seed="pavi"}`; // need to change seed
 
   const breadcrumbs = [
     { text: "AlAudit", href: "/" },
@@ -52,7 +52,11 @@ function Header() {
         </div>
       </div>
 
-      <Breadcrumbs items={breadcrumbs} />
+      {/* <Breadcrumbs items={breadcrumbs} /> */}
+      <p className="mt-2 mb-2">
+        {" "}
+        <span className="text-[#5D677D]">AlAudit / Project /</span> Code Editor
+      </p>
       {/* Render content based on the activeMenu */}
       {/* {activeMenu !== null && (
         <div className="mt-4 p-4 bg-gray-200">
