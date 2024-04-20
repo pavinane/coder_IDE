@@ -20,6 +20,7 @@
      <a href="https://github.com/pavinane/coder_IDE">Request Feature</a>
   
   </p>
+     
 </div>
 
 
@@ -54,7 +55,13 @@ This section should list any major frameworks/libraries used to TailwindCss your
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+## Demo
 
+demo video 
+[Watch the demo video](assets/demo.mov)
+<div>
+ <Video src="assets/demo.mov" alt="demo" >
+ </div>
 
 
 <!-- CONTACT -->
